@@ -11,20 +11,17 @@ const CREATE_PRODUCT_MUTATION = gql`
     # Which variables are getting passed in? And What types are they
     $name: String!
     $description: String!
-    $price: Int!
     $image: Upload
   ) {
     createProduct(
       data: {
         name: $name
         description: $description
-        price: $price
-        status: "AVAILABLE"
+        status: "DRAFT"
         photo: { create: { image: $image, altText: $name } }
       }
     ) {
       id
-      price
       description
       name
     }
@@ -33,10 +30,9 @@ const CREATE_PRODUCT_MUTATION = gql`
 
 export default function CreateProduct() {
   const { inputs, handleChange, clearForm, resetForm } = useForm({
+    name: 'Broken Fridge',
+    description: 'The fridge is too warm',
     image: '',
-    name: 'Nice Shoes',
-    price: 34234,
-    description: 'These are the best shoes!',
   });
   const [createProduct, { loading, error, data }] = useMutation(
     CREATE_PRODUCT_MUTATION,
@@ -61,6 +57,27 @@ export default function CreateProduct() {
     >
       <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
+        <label htmlFor="name">
+          Title
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Broken Fridge"
+            value={inputs.name}
+            onChange={handleChange}
+          />
+        </label>
+        <label htmlFor="description">
+          Description
+          <textarea
+            id="description"
+            name="description"
+            placeholder="The temperature is too warm"
+            value={inputs.description}
+            onChange={handleChange}
+          />
+        </label>
         <label htmlFor="image">
           Image
           <input
@@ -71,40 +88,8 @@ export default function CreateProduct() {
             onChange={handleChange}
           />
         </label>
-        <label htmlFor="name">
-          Name
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Name"
-            value={inputs.name}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="price">
-          Price
-          <input
-            type="number"
-            id="price"
-            name="price"
-            placeholder="price"
-            value={inputs.price}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="description">
-          Description
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Description"
-            value={inputs.description}
-            onChange={handleChange}
-          />
-        </label>
 
-        <button type="submit">+ Add Product</button>
+        <button type="submit">Create Ticket</button>
       </fieldset>
     </Form>
   );

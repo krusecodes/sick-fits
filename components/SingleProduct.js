@@ -47,19 +47,34 @@ export default function SingleProduct({ id }) {
   if (error) return <DisplayError error={error} />;
   const { Product } = data;
   console.log(Product);
+  const statusLabel = Product.status;
+  console.log(statusLabel);
+  const updateStatusLabel = () => {
+    if (statusLabel === 'DRAFT') {
+      return 'Submitted for Review';
+    }
+    if (statusLabel === 'AVAILABLE') {
+      return 'Reviewed by Manager';
+    }
+    if (statusLabel === 'UNAVAILABLE') {
+      return 'Solution in Progress';
+    }
+  };
   return (
     <ProductStyles>
       <Head>
         <title>Sick Fits | {Product.name}</title>
       </Head>
-      <img
-        src={Product.photo.image.publicUrlTransformed}
-        alt={Product.photo.altText}
-      />
+      {Product?.photo?.image?.publicUrlTransformed && (
+        <img
+          src={Product.photo.image.publicUrlTransformed}
+          alt={Product.photo.altText}
+        />
+      )}
       <div className="details">
         <h2>{Product.name}</h2>
         <p>{Product.description}</p>
-        <p>{Product.status}</p>
+        <p>{updateStatusLabel()}</p>
       </div>
     </ProductStyles>
   );

@@ -5,6 +5,18 @@ import PriceTag from './styles/PriceTag';
 import formatMoney from '../lib/formatMoney';
 
 export default function Product({ product }) {
+  const updateStatusLabel = () => {
+    const statusLabel = product.status;
+    if (statusLabel === 'DRAFT') {
+      return 'Submitted for Review';
+    }
+    if (statusLabel === 'AVAILABLE') {
+      return 'Reviewed by Manager';
+    }
+    if (statusLabel === 'UNAVAILABLE') {
+      return 'Solution in Progress';
+    }
+  };
   return (
     <ItemStyles>
       <img
@@ -14,9 +26,20 @@ export default function Product({ product }) {
       <Title>
         <Link href={`/product/${product.id}`}>{product.name}</Link>
       </Title>
-      <PriceTag>{formatMoney(product.price)}</PriceTag>
+      <PriceTag>{updateStatusLabel()}</PriceTag>
       <p>{product.description}</p>
-      {/* TODO: Add buttons to edit and delte item */}
+      <div className="buttonList">
+        <Link
+          href={{
+            pathname: 'update',
+            query: {
+              id: product.id,
+            },
+          }}
+        >
+          Update Status ✏️
+        </Link>
+      </div>
     </ItemStyles>
   );
 }

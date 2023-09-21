@@ -37,14 +37,12 @@ export default function Header() {
   return (
     <HeaderStyles>
       <div className="bar">
-        <Logo>
-          <Link href="/">Sick fits</Link>
-        </Logo>
+        <Link href="/">Prefix Hack</Link>
         <Nav />
       </div>
-      <div className="sub-bar">
+      {/* <div className="sub-bar">
         <p>Search</p>
-      </div>
+      </div> */}
     </HeaderStyles>
   );
 }
