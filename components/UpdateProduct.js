@@ -119,8 +119,8 @@ export default function UpdateProduct({ id }) {
               value={inputs.status}
               onChange={handleChange}
             >
-              <option value="AVAILABLE">Reviewed</option>
-              <option value="UNAVAILABLE">Being worked on</option>
+              <option value="AVAILABLE">Reviewed by Manager</option>
+              <option value="UNAVAILABLE">Solution in Progress</option>
             </select>
           </label>
 
